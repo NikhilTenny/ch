@@ -1,0 +1,6 @@
+# created by virtualenv automatically
+
+#Django files
+*.pyc
+*.cpython-38.pyc
+__pycache__/
