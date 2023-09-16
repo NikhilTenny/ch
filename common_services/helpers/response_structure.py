@@ -1,4 +1,11 @@
 
+class ServiceResponse:
+
+    def __init__(self, success: bool, result: any):
+        self.success = success
+        self.result = result
+
+
 class ResponseStructure:
 
     @staticmethod

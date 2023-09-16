@@ -3,7 +3,7 @@ from common_services.helpers.response_structure import ResponseStructure
 # Local imports
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from user.models import Users
+from rest_framework import status
 from user.services.users_services import UserServices
 from user.serializers.users_serializers import UserSerializers
 
@@ -11,25 +11,31 @@ from user.serializers.users_serializers import UserSerializers
 class RegisterAPI(APIView):
 
     def post(self, request):
+        # TODO:
+        # 1. Add login in exceptions
         try:
             request_body = request.data
+            user_service = UserServices()
             user_serializer = UserSerializers(data=request_body)
 
-            if user_serializer.is_valid():
-                user_data = user_serializer.validated_data
-                user_service = UserServices()
-                response = user_service.create_new_user(user_data)
-                if response['success']:
-                    return Response(response, status=200)
-                else:
-                    return Response(response, status=400)
+            if not user_serializer.is_valid():
+                response = ResponseStructure.error_response(user_serializer.errors)
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
+            
+            user_data = user_serializer.validated_data
+            create_user_result = user_service.create_new_user(user_data)
 
-            response = ResponseStructure.error_response(user_serializer.errors)
-            return Response(response, status=400)
+            if create_user_result.success:
+                response = ResponseStructure.success_msg_response(create_user_result.result)
+                return Response(response, status=status.HTTP_201_CREATED)
+            
+            response = ResponseStructure.error_response(create_user_result.result)
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-        except Exception as err:
-            response = ResponseStructure.error_response(str(err))
-            return Response(response, status=500)
+
+        except Exception:
+            response = ResponseStructure.error_response("Something went wrong.")
+            return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
