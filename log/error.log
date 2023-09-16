@@ -1,0 +1,8 @@
+2023-09-16 19:31:19,316 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:35:44,315 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:35:54,186 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:36:44,048 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:36:44,050 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:36:44,642 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:36:44,992 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}
+2023-09-16 19:36:45,904 user.views   ERROR    {'first_name': [ErrorDetail(string='This field may not be blank.', code='blank')]}

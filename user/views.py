@@ -7,12 +7,13 @@ from rest_framework import status
 from user.services.users_services import UserServices
 from user.serializers.users_serializers import UserSerializers
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class RegisterAPI(APIView):
 
     def post(self, request):
-        # TODO:
-        # 1. Add login in exceptions
         try:
             request_body = request.data
             user_service = UserServices()
@@ -28,12 +29,13 @@ class RegisterAPI(APIView):
             if create_user_result.success:
                 response = ResponseStructure.success_msg_response(create_user_result.result)
                 return Response(response, status=status.HTTP_201_CREATED)
-            
+            logger.error(create_user_result.result)
             response = ResponseStructure.error_response(create_user_result.result)
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
-        except Exception:
+        except Exception as err:
+            logger.error(str(err))
             response = ResponseStructure.error_response("Something went wrong.")
             return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

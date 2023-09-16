@@ -140,3 +140,46 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+
+NO_AUTH_URLS = ['api/user/register', 'api/user/login']
+
+APP_LOG_FILENAME = 'log/app.log'
+ERROR_LOG_FILENAME = 'log/error.log'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "file": {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    "handlers": {
+        "app_log_file": {
+            "level": "DEBUG",
+            "class": 'logging.handlers.TimedRotatingFileHandler',
+            "formatter": 'file',
+            "when": 'D',
+            "interval": 1,
+            "backupCount": 7,
+            "filename": APP_LOG_FILENAME
+        },
+        "debug_log_file": {
+            "level": "ERROR",
+            "class": 'logging.handlers.TimedRotatingFileHandler',
+            "formatter": 'file',
+            "when": 'D',
+            "interval": 1,
+            "backupCount": 7,
+            "filename": ERROR_LOG_FILENAME
+        }
+    },
+    "loggers": {
+        "": {
+            "level": "DEBUG",
+            "handlers": ["app_log_file", "debug_log_file"]
+        }
+    }
+}
+
+
