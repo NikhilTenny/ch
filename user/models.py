@@ -27,8 +27,7 @@ class Users(AbstractUser):
         related_name='custom_user_user_permissions'
     )
 
-    objects = models.Manager()
-    custom_obj = UsersManager()
+    objects = UsersManager()
 
     def __str__(self):
         return self.email

@@ -1,8 +1,8 @@
-from django.db import models
+from django.contrib.auth.models import BaseUserManager
 from django.db import OperationalError
 from django.utils.translation import gettext_lazy as _
 
-class UsersManager(models.Manager):
+class UsersManager(BaseUserManager):
     
     def check_if_user_exists(self, email: str):
         """ Checks if the user already exists"""
@@ -12,7 +12,7 @@ class UsersManager(models.Manager):
             user = self.get(email=email)
             return user
         
-        except self.model.DoesNotExist:
+        except self.model.DoesNotExist: # User does not exist
             return None
         
         except OperationalError as op_error:

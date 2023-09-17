@@ -15,9 +15,8 @@ class UserServices:
         """
             Creates a new user if user doesn't already exists.
         """
-
         try:
-            existing_user =  Users.custom_obj.check_if_user_exists(user_data['email'])
+            existing_user =  Users.objects.check_if_user_exists(user_data["email"])
 
             if existing_user is None:
                 password_hash = make_password(user_data['password'])
@@ -28,8 +27,8 @@ class UserServices:
             else:
                 response = ServiceResponse(
                     False, "Given email address already exists")
-                
             return response
+        
         except OperationalError as op_err:
             self.logger.error(str(op_err))
             response = ServiceResponse(False, "Something went wrong.")
