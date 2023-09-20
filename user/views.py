@@ -53,10 +53,7 @@ class LoginAPI(APIView):
         try:
             request_data = request.data
             required_fields = ['email', 'password']
-            empty_or_missing_fields = Validation.validate_empty_or_missing_fields(
-                request_data, required_fields)
-            if empty_or_missing_fields:
-                raise MissingRequiredFieldException(empty_or_missing_fields)
+            Validation.validate_empty_or_missing_fields(request_data, required_fields)
             
             user = authenticate(**request_data)
             if user is None:
@@ -66,9 +63,9 @@ class LoginAPI(APIView):
             # Creating access and refresh tokens
             auth_tokens = JWTToken.get_tokens_for_user(user)
 
-            response = ResponseStructure.success_response(auth_tokens, 'Login successful')
+            response = ResponseStructure.success_response(auth_tokens, 'Login successfull')
+            logger.info(f"{user.email} logged in successfully.")
             return Response(response, status=status.HTTP_202_ACCEPTED)
-
             
         except MissingRequiredFieldException as field_error:
             logger.error(str(field_error))
