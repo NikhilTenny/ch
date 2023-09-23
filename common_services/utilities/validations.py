@@ -1,3 +1,5 @@
+from common_services.exceptions.common_exceptions import MissingRequiredFieldException
+
 from typing import Union, List
 
 class Validation:
@@ -12,5 +14,6 @@ class Validation:
         for field in required_fields:
             if field not in request_data or request_data[field] == "":
                 missing_or_empty_fields.append(field)
-        return missing_or_empty_fields
-        
+        if missing_or_empty_fields:
+            raise MissingRequiredFieldException(missing_or_empty_fields)
+         

@@ -11,9 +11,7 @@ from common_services.utilities.auth import JWTToken
 from common_services.exceptions.common_exceptions import MissingRequiredFieldException
 from user.services.users_services import UserServices
 from user.serializers.users_serializers import UserSerializers
-from user.models import Users
 
-from rest_framework_simplejwt.tokens import RefreshToken
 
 import logging
 logger = logging.getLogger(__name__)
