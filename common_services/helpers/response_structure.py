@@ -1,8 +1,8 @@
 
 class ServiceResponse:
 
-    def __init__(self, success: bool, result: any):
-        self.success = success
+    def __init__(self, status_code: int, result: any):
+        self.status_code = status_code
         self.result = result
 
 

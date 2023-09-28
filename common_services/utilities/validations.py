@@ -16,4 +16,10 @@ class Validation:
                 missing_or_empty_fields.append(field)
         if missing_or_empty_fields:
             raise MissingRequiredFieldException(missing_or_empty_fields)
-         
+        
+    @staticmethod
+    def format_serializer_errors(serializer_errors):
+        field_names = {}
+        for field_name, field_errors in serializer_errors.items():
+            field_names[field_name] = str(field_errors[0])
+        return field_names

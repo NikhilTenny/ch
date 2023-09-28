@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Budget, BudgetPeriod, Month, Year
 
-# Register your models here.
+admin.site.register([Budget, BudgetPeriod, Month, Year])

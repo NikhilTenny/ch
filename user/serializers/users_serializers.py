@@ -8,6 +8,16 @@ class UserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Users
-        fields = ['email', 'first_name', 'last_name', 'phone_number', 'password']
+        fields = ['id','email', 'first_name', 'last_name', 'phone_number', 'password']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        # Exclude the "password" field from the serialized data
+        data.pop('password', None)
+        return data
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True, max_length=128) 
 
 

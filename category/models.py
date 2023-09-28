@@ -11,7 +11,7 @@ class Category(models.Model):
         return self.name
     
 class UserCategory(models.Model):
-    name = models.CharField(max_length=80,  null=False, blank=False)
+    name = models.CharField(max_length=80, null=False, blank=False)
     parent_id = models.ForeignKey('self', 
             null=True, blank=True, on_delete=models.CASCADE)
     main_category_id = models.ForeignKey(Category, 
