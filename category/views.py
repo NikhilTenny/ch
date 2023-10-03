@@ -30,7 +30,27 @@ class UserCategoryAPI(APIView):
                     )
             return Response(response, status.HTTP_201_CREATED)
 
-        except Exception as error:
-            logger.error(repr(error))
+        except Exception as err:
+            logger.error(repr(err))
+            response = ResponseStructure.error_response("Something went wrong.")
+            return Response(response, status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    def get(self, request):
+        """
+            Retrieves paginated user category list  
+        """
+        try:
+            request_data = request.GET
+            status_code, response_data = self.user_category_service.get_user_categories(
+                    request_data)
+            if 400 <= status_code <= 599:
+                response = ResponseStructure.error_response(response_data)
+                return Response(response, status_code)
+
+            response = ResponseStructure.success_response(response_data)
+            return Response(response, status_code)
+
+        except Exception as err:
+            logger.error(repr(err))
             response = ResponseStructure.error_response("Something went wrong.")
             return Response(response, status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -8,12 +8,15 @@ from category.serializers.user_category_serializer import UserCategorySerializer
 from common_services.exceptions.common_exceptions import MissingRequiredFieldException
 from common_services.utilities.validations import Validation
 from common_services.helpers.response_structure import ServiceResponse
+from common_services.helpers.model_pagination import ModelPagination
+from category.models import UserCategory
 
 logger = logging.getLogger(__name__)
 
 class UserCategoryService:
     def __init__(self):
         self.serializer = UserCategorySerializer
+        self.paginator = ModelPagination()
 
     def get_serialized_data(self, req_data:dict) -> ServiceResponse :
         """
@@ -40,3 +43,18 @@ class UserCategoryService:
         record_instance = serializer.save()
         deserialized_data = self.serializer(record_instance).data
         return deserialized_data
+    
+    def get_user_categories(self, request_data:dict)-> ServiceResponse:
+        """
+           Get a paginated list of user categories. 
+        """
+        try:
+            query_result = UserCategory.objects.all()
+            self.paginator.create_pagination_params(request_data)
+            paginated_queryset = self.paginator.paginate_queryset(query_result)
+            paginated_result = self.serializer(paginated_queryset, many=True)
+            return status.HTTP_200_OK, paginated_result.data
+        
+        except Exception as err:
+            logger.error(repr(err))
+            return status.HTTP_500_INTERNAL_SERVER_ERROR, str(err)

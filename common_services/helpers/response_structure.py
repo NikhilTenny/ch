@@ -9,7 +9,7 @@ class ServiceResponse:
 class ResponseStructure:
 
     @staticmethod
-    def success_response(payload, message:str) -> dict:
+    def success_response(payload, message:str=None) -> dict:
         """ Return successfull API response
             containing payload and message
         """
